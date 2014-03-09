@@ -4,9 +4,9 @@ add2
 
 正常：check_exist
 
-缓存中已存在，不能再add：${True}
+缓存中已存在：${True}
 
-缓存中不存在，可以add：${False}
+缓存中不存在：${False}
 
 校验flags
 
@@ -36,21 +36,21 @@ key为空字符串：${EMPTY}
 
 key由数字，字母和下划线组成：123、abc、123abc、_123abc
 
-key含半角标点符号：，;`!@#$%^&*(){+=|<>?."[\/
+key含半角标点符号：，;`!@#$%^&*(){+=|<>?."[\\\/
 
 key含全角标点符号：！＠＃＄％＾＆（）｜＇＂？
 
 key含中文：别人不想改变，但我不得不变
 
-key长度等于250个字符：${text_250b}、${chi_250b}
-
-异常：ab_check_key
-
-key长度超过250个字符：${text_251b}
+key长度等于250个字节：${text_250b}、${chi_250b}
 
 key含有tab键：abc\\t123
 
 key含回车键：abc\\r123
+
+异常：ab_check_key
+
+key长度超过250个字节：${text_251b}
 
 key含换行符：abc\\n123
 
@@ -66,7 +66,7 @@ value为空字符串：${EMPTY}
 
 value由数字，字母和下划线组成：123、abc、123abc、_123abc
 
-value含半角标点符号：，;`!@#$%^&*(){+=|<>?."[\/
+value含半角标点符号：，;`!@#$%^&*(){+=|<>?."[\\\/
 
 value含全角标点符号：！＠＃＄％＾＆（）｜＇＂？
 
@@ -80,13 +80,15 @@ value含换行符：abc\\n123
 
 value含空格：abc${SPACE}123
 
-value为二进制：${bin_1024k}
+value为二进制：${bin_1024k}  binary=${True}
 
 value等于1024kb：${text_1024k}、${chi_1024k}
 
 value大于1024kb：${text_1024k_plus_1b}、${chi_1024k_plus_1b}
 
-value等于10M：${text_10M}
+value为文本，等于10M：${text_10M}
+
+value为二进制，等于10M：${bin_10M}  binary=${True}
 
 异常：ab_check_val
 
@@ -96,7 +98,7 @@ value大于10M：${text_10M_plus_1b}
 
 正常：check_noreply
 
-指定noreply，服务器不会返回响应
+指定noreply，服务器不会返回响应：${True}
 
 校验expire
 

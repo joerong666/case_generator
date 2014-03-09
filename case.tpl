@@ -1,5 +1,6 @@
 $(case_name)
     [Documentation]    $(doc)
+    [Tags]  $(keyword)
     [Template]  $(keyword)
     :FOR  ${desc}  ${addr}  IN  Proxy  ${proxy_addr}
-    \\     ${desc}  ${addr}  $(args)
+    \\     $(args)  desc=${desc}  addr=${addr}
