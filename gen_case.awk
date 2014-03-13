@@ -18,7 +18,7 @@ BEGIN {
         #如果存在多个用顿号"、"隔开的单词，除了第一个会同时被用作关键字和tag之外，
         #其它单词都将被视为tag，当然，也可以直接用多个空格隔开不同的单词
         sprintf("echo %s |awk -F '[：、 ]' '{print $2}'", $0) | getline keyword
-        sprintf("echo %s |awk -F '[：]' '{gsub(/、| /, \"  \", $2); print $2}'", $0) | getline tags
+        sprintf("echo %s |awk -F '[：]' '{gsub(/、| /, \"  \", $2); print $2}'", $0) | getline suite_tags
 
         #关键字以下划线分隔出来的最后一个单词将被视为关键字的参数
         sprintf("echo %s |awk -F '_' '{print $NF}'", keyword) | getline arg_name
@@ -30,6 +30,9 @@ BEGIN {
             sprintf("echo '%s' |awk -F'：' '{print $2}'", rec) |getline data
             sprintf("echo '%s' |sed 's/\\$/\\\\\\\\$/g'", rec) |getline rec_escape
 #            print rec_escape
+            #用例描述前的用小括号括起的单词将被当作本用例的tags，多个tags用顿号隔开
+            sprintf("echo '%s' |awk -F'：' '{print $1}' |awk -F '[()]' '{gsub(/、/, \"  \", $2); print $2}'", rec) |getline case_tags
+            tags = suite_tags "  " case_tags
 
             cmd = " -e 's/$(case_name)/" case_pre case_num "/;'"
             cmd = cmd " -e 's/$(doc)/" type_desc "：" rec_escape "/;'"
@@ -41,10 +44,10 @@ BEGIN {
                 tpl = data_tpl
 
                 #指定第一个参数的名称
-                sub(/\$\(args\)/, arg_name "=" arr[i + 1], tpl)
+#                sub(/\$\(args\)/, arg_name "=" arr[i + 1], tpl)
 
                 #不指定第一个参数的名称，需小心值带有赋值号的数据
-#                sub(/\$\(args\)/, arr[i + 1], tpl)
+                sub(/\$\(args\)/, arr[i + 1], tpl)
 
                 cmd = cmd " -e '$a\\" tpl "'"
             }
