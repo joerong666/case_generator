@@ -4,13 +4,13 @@ add2
 
 正常：check_exist
 
-缓存中已存在：${True}
+缓存中已存在：
 
 缓存中不存在：${False}
 
 校验flags
 
-正常：check_flags
+正常：check_flags       slow
 
 flags取最小值：0
 
@@ -30,7 +30,7 @@ flags取非数字：abc
 
 校验key
 
-正常：check_key
+正常：check_key、ignore
 
 key为空字符串：${EMPTY}
 
